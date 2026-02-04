@@ -15,14 +15,14 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
     cy.get('#confirm-password').type('123,5Aire')
     cy.get('#terms-agreement').check()
     cy.get('#register-btn').click()
-    
+
     cy.url().should('include', 'dashboard')
   })
 
   it('Deve fazer cadastro com sucesso usando Faker', () => {
     let nome = faker.person.fullName()
     let email = faker.internet.email()
- 
+
     cy.get('#name').type(nome)
     cy.get('#email').type(email)
     cy.get('#phone').type('44999430660')
@@ -30,7 +30,7 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
     cy.get('#confirm-password').type('richar.@m8')
     cy.get('#terms-agreement').check()
     cy.get('#register-btn').click()
-   
+
     cy.url().should('include', 'dashboard')
     cy.get('#user-name').should('contain', nome)
   })
