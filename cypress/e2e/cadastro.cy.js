@@ -2,8 +2,9 @@
 import { faker } from '@faker-js/faker'
 
 describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
+  cy.clearLocalStorage
   beforeEach(() => {
-    cy.visit('http://localhost:3000/register.html')
+    cy.visit('/register.html')
   })
 
   it('Deve fazer cadastro com sucesso, usando função JS', () => {
@@ -35,51 +36,46 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
     cy.get('#user-name').should('contain', nome)
   })
 
+  it('Deve bloquear cadastro quando campos obrigatorios estão vazios', () => {
+    cy.get('#register-btn').click()
+    // exemplos (ajuste conforme seu HTML)
+    cy.get('#name').then(($el) => expect($el[0].checkValidity()).to.eq(false))
+    cy.get('#email').then(($el) => expect($el[0].checkValidity()).to.eq(false))
+    cy.get('#password').then(($el) =>
+      expect($el[0].checkValidity()).to.eq(false),
+    )
+  })
 
-it('Deve bloquear cadastro quando campos obrigatorios estão vazios', () => {
-  cy.get('#register-btn').click()
-   // exemplos (ajuste conforme seu HTML)
-  cy.get('#name').then($el => expect($el[0].checkValidity()).to.eq(false))
-  cy.get('#email').then($el => expect($el[0].checkValidity()).to.eq(false))
-  cy.get('#password').then($el => expect($el[0].checkValidity()).to.eq(false))
-});
+  it('Deve bloquear cadastro com email inválido', () => {
+    cy.get('#name').type('Teste-QA')
+    cy.get('#email').type('email-invalido')
+    cy.get('#phone').type('44999430660')
+    cy.get('#password').type('123,5Aire')
+    cy.get('#confirm-password').type('123,5Aire')
+    cy.get('#terms-agreement').check()
+    cy.get('#register-btn').click()
+    cy.get('#email').then(($el) => expect($el[0].checkValidity()).to.eq(false))
+  })
 
-it('Deve bloquear cadastro com email inválido', () => {
-  cy.get('#name').type('Teste-QA')
-  cy.get('#email').type('email-invalido')
-  cy.get('#phone').type('44999430660')
-  cy.get('#password').type('123,5Aire')
-  cy.get('#confirm-password').type('123,5Aire')
-  cy.get('#terms-agreement').check()
-  cy.get('#register-btn').click()
+  it('Deve bloquear cadastro quando senhas não coincidem', () => {
+    cy.get('#name').type('Teste QA')
+    cy.get('#email').type(`teste${Date.now()}@teste.com`)
+    cy.get('#phone').type('44999430660')
+    cy.get('#password').type('123,5Aire')
+    cy.get('#confirm-password').type('diferente123')
+    cy.get('#terms-agreement').check()
+    cy.get('#register-btn').click()
+    cy.url().should('include', 'register')
+  })
 
-  cy.get('#email').then($el => expect($el[0].checkValidity()).to.eq(false))
-})
+  it('Deve bloquear cadastro se não aceitar os termos', () => {
+    cy.get('#name').type('Teste QA')
+    cy.get('#email').type(`teste${Date.now()}@teste.com`)
+    cy.get('#phone').type('44999430660')
+    cy.get('#password').type('123,5Aire')
+    cy.get('#confirm-password').type('123,5Aire')
 
-
-it('Deve bloquear cadastro quando senhas não coincidem', () => {
-  cy.get('#name').type('Teste QA')
-  cy.get('#email').type(`teste${Date.now()}@teste.com`)
-  cy.get('#phone').type('44999430660')
-  cy.get('#password').type('123,5Aire')
-  cy.get('#confirm-password').type('diferente123')
-  cy.get('#terms-agreement').check()
-  cy.get('#register-btn').click()
-
-
-  cy.url().should('include', 'register')
-})
-
-it.only('Deve bloquear cadastro se não aceitar os termos', () => {
-  cy.get('#name').type('Teste QA')
-  cy.get('#email').type(`teste${Date.now()}@teste.com`)
-  cy.get('#phone').type('44999430660')
-  cy.get('#password').type('123,5Aire')
-  cy.get('#confirm-password').type('123,5Aire')
-
-  cy.get('#register-btn').click()
-  cy.url().should('include', 'register')
-})
-
-
+    cy.get('#register-btn').click()
+    cy.url().should('include', 'register')
+  })
 })

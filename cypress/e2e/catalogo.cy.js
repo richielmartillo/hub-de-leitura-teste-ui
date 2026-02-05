@@ -3,7 +3,7 @@
 describe('Funcionalidade: Catálogo de livros', () => {
   beforeEach(() => {
     cy.clearLocalStorage()
-    cy.visit('catalog.html')
+    cy.visit('/catalog.html')
   })
 
   it('Deve clicar no botão Adicionar á cesta', () => {
