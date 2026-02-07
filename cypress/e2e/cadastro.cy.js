@@ -16,7 +16,6 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
     cy.get('#confirm-password').type('123,5Aire')
     cy.get('#terms-agreement').check()
     cy.get('#register-btn').click()
-
     cy.url().should('include', 'dashboard')
   })
 
@@ -35,6 +34,7 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
     cy.url().should('include', 'dashboard')
     cy.get('#user-name').should('contain', nome)
   })
+  
 
   it('Deve bloquear cadastro quando campos obrigatorios estão vazios', () => {
     cy.get('#register-btn').click()
@@ -77,5 +77,18 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
 
     cy.get('#register-btn').click()
     cy.url().should('include', 'register')
-  })
+   })
+
+    it('Deve preencher cadastro com sucesso - Usando comando customisado', () => {
+    let email = `teste${Date.now()}@teste.com`            
+    let nome = faker.person.fullName({sex: 'male'})
+    cy.preencherCadastro(nome, email, '44999430660', 'richar.@m8', 'richar.@m8')
+    cy.url().should('include', 'dashboard')
+
+
+
+    });
+
 })
+
+
