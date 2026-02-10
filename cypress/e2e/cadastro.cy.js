@@ -3,10 +3,15 @@ import { faker } from '@faker-js/faker'
 import cadastroPage from '../support/pages/cadastro-page';
 
 describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
+
   cy.clearLocalStorage
   beforeEach(() => {
     cadastroPage.visitarPaginaCadastro()
   })
+
+  afterEach(() => {
+     cy.screenshot()
+  });
 
   it('Deve fazer cadastro com sucesso, usando função JS', () => {
     let email = `teste${Date.now()}@teste.com`
