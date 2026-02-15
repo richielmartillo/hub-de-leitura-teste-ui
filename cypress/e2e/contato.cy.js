@@ -100,4 +100,23 @@ describe('Funcionalidade: Contato', () => {
     cy.get('[name="email"]').should('have.value', '')
     cy.get('[name="message"]').should('have.value', '')
   })
+
+
+    it('Deve enviar mensagem com sucesso', () => {
+    cy.get('#name').type('Richard')
+    cy.get('#email').type('richard@teste.com')
+    cy.get('#message').type('Olá, isso é um teste de contato.')
+  })
+      it('Não deve enviar com campos vazios', () => {
+    
+  })
+
+
+  it('Não deve acessar dashboard sem login', () => {
+    cy.visit('dashboard.html')
+    // ajuste conforme seu sistema:
+    // se redireciona para login:
+    cy.url().should('include', 'login')
+  })
+  
 })

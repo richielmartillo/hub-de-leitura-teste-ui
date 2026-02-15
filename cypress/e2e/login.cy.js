@@ -12,27 +12,7 @@ describe('Funcionalidade: Login', () => {
     cy.get('#login-btn').click()
     cy.url().should('include', 'dashboard')
    });
-
-    it('Deve logar com sucesso', () => {
-    cy.get('#email').type('admin@biblioteca.com', { log: false })
-    cy.get('#password').type('admin123', { log: false })
-    cy.get('#login-btn').click()
-    cy.url().should('include', 'dashboard')
-  })
-
-
-  it('Deve logar com sucesso', () => {
-    cy.login('admin@biblioteca.com', 'admin123')
-    cy.url().should('include', 'dashboard')
-  })
-
      
-
-  
-  
-
-
-
     it('Deve fazer login com sucesso - Usando comando customizado', () => {
         cy.login('richardbalestrim8@gmail.com', 'richar.@m8')
     }); 
@@ -42,27 +22,9 @@ describe('Funcionalidade: Login', () => {
     });
 
     it('Deve fazer login com sucesso - Usando importação da massa de dados', () => {
-     cy.login (user.email, user.senha)    
+     cy.login (user[0].email, user[0].senha)    
+     cy.url().should('include', 'dashboard')
+
     });
-
-
- it.only('Deve logar com usuário comum', () => {
-    cy.login('usuario@teste.com', 'user123')
-    cy.url().should('include', 'dashboard')
-  })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }); 

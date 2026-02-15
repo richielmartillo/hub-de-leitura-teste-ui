@@ -66,4 +66,27 @@ describe('Funcionalidade: Catálogo de livros', () => {
   it('Deve iniciar com contador da cesta em 0', () => {
     cy.get('#cart-count').should('contain', '0')
   })
+
+
+
+ it('Deve buscar um livro existente', () => {
+    cy.get('#search-input').clear().type('Dom Quixote')
+    cy.contains('Dom Quixote').should('be.visible')
+  })
+
+  it('Não deve retornar livro inexistente', () => {
+    cy.get('#search-input').clear().type('Livro Que Nao Existe 123')
+    // ajuste conforme seu app (mensagem ou lista vazia)
+    cy.contains(/nenhum|não encontrado/i).should('be.visible')
+  })
+
+
+
+  it('Deve limpar busca', () => {
+    cy.get('#search-input').type('Dom Quixote')
+    cy.get('#search-input').clear()
+    // valida que voltou a lista normal (ajuste)
+    cy.get('#search-input').should('have.value', '')
+  })
+
 })
