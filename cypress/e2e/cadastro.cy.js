@@ -10,16 +10,9 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
   })
 
   afterEach(() => {
-     cy.screenshot()
+//     cy.screenshot()
   });
 
-  
-
-
-
-
-
-  
   it('Deve bloquear cadastro quando campos obrigatorios estão vazios', () => {
     cy.get('#register-btn').click()
     // exemplos (ajuste conforme seu HTML)
@@ -90,15 +83,11 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
     cy.get('#user-name').should('contain', nome)
   })
   
-
-
     it('Deve preencher cadastro com sucesso - Usando comando customisado', () => {
     let email = `teste${Date.now()}@teste.com`            
     let nome = faker.person.fullName({sex: 'male'})
     cy.preencherCadastro(nome, email, '44999430660', 'richar.@m8', 'richar.@m8')
     cy.url().should('include', 'dashboard')
-
-
 
     });
 
@@ -107,12 +96,6 @@ describe('Funcionalidade: Cadastro no Hub de Leitura', () => {
     let email = `teste${Date.now()}@teste.com` 
     cadastroPage.preencherCadastro('Richard Marlon Balestrim', email, '44999430660', 'richar.@8m', 'richar@8m')
   });
-
- 
- 
- 
- 
- 
  
   it('Deve validar mensagem ao tentar cadastrar sem prencher nome', () => {
   
